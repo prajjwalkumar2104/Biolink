@@ -1,0 +1,27 @@
+# /docker-compose.yml
+version: '3.8'
+
+services:
+  backend:
+    build: 
+      context: ./biocascade-backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./biocascade-backend/.env
+    restart: unless-stopped
+
+  frontend:
+    build: 
+      context: ./biocascade-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./biocascade-frontend/.env
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:5000 # Points to the mapped backend port
+    depends_on:
+      - backend
+    restart: unless-stopped
