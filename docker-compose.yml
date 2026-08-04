@@ -1,17 +1,17 @@
 services:
   backend:
     build: 
-      context: ./biocascade-backend
+      context: ./biolink-backend
       dockerfile: Dockerfile
     ports:
       - "5000:5000"
     env_file:
-      - ./biocascade-backend/.env
+      - ./biolink-backend/.env
     restart: unless-stopped
 
   frontend:
     build: 
-      context: ./biocascade-frontend
+      context: ./biolink-frontend
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
