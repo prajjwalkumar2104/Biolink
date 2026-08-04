@@ -1,29 +1,19 @@
 # /biolink-backend/Dockerfile
 
-# Step 1: Use an official lightweight Node.js image
-FROM node:20-alpine
+# Step 1: Use a Debian-based slim image to support AI native C++ binaries
+FROM node:20-slim
 
-# Step 2: Install OpenSSL (Required by Prisma for Alpine Linux)
-RUN apk add --no-cache openssl
+# Step 2: Install OpenSSL (Debian syntax)
+RUN apt-get update && apt-get install -y openssl
 
 # Step 3: Set the working directory inside the container
 WORKDIR /app
 
-# Step 4: Copy package files and install dependencies
+# (Leave the rest of the file exactly the same!)
 COPY package*.json ./
 RUN npm install
-
-# Step 5: Copy the rest of the application code
 COPY . .
-
-# Step 6: Generate the Prisma client (Mock URL satisfies build-time checks)
 RUN DATABASE_URL="postgresql://dummy:dummy@dummy:5432/dummy" npx prisma generate
-
-# Step 7: Build the TypeScript code
 RUN npm run build
-
-# Step 8: Expose the Express API port
 EXPOSE 5000
-
-# Step 9: Define the command to start the server
 CMD ["npm", "start"]

@@ -4,20 +4,20 @@ import express from 'express';
 import cors from 'cors';
 
 // Import our controllers
-import { getCascadeTree, searchNodes ,getRootDeficiencies} from './controllers/graphController';
-import { semanticSearch } from './controllers/searchController';
-import { findShortestPath } from './controllers/pathfnderController';
+import { getCascadeTree, searchNodes ,getRootDeficiencies} from './controllers/graphController.js';
+import { semanticSearch } from './controllers/searchController.js';
+import { findShortestPath } from './controllers/pathfnderController.js';
 
 // Inside src/index.ts
-import { generateAISummary } from './controllers/aiController';
-import { getMultiCascade } from './controllers/graphController';
+import { generateAISummary } from './controllers/aiController.js';
+import { getMultiCascade } from './controllers/graphController.js';
 
 import multer from 'multer';
-import { parseLabReport } from './controllers/uploadController';
+import { parseLabReport } from './controllers/uploadController.js';
 
 // 🔥 1. IMPORT REDIS AND MIDDLEWARE
-import { connectRedis } from './redis';
-import { cacheMultiCascade } from './middleware/cacheMiddleware';
+import { connectRedis } from './redis.js';
+import { cacheMultiCascade } from './middleware/cacheMiddleware.js';
 
 // Setup Multer to store files temporarily in RAM (Memory)
 const app = express();

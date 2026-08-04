@@ -1,7 +1,7 @@
 // src/controllers/graphController.ts
 import { type Request, type Response } from 'express';
-import { redis } from '../redis'; 
-import { prisma } from '../prisma';// <-- This is all we need now!
+import { redis } from '../redis.js'; 
+import { prisma } from '../prisma.js';// <-- This is all we need now!
 
 
 

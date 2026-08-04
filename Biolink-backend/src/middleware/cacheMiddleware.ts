@@ -1,5 +1,5 @@
-import { type Request,type Response,type NextFunction } from 'express';
-import { redis } from '../redis';
+import { type Request, type Response, type NextFunction } from 'express';
+import { redis } from '../redis.js';
 
 export const cacheMultiCascade = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
@@ -20,14 +20,17 @@ export const cacheMultiCascade = async (req: Request, res: Response, next: NextF
       const cachedData = await redis.get(cacheKey);
       
       if (cachedData) {
-        console.log(`🟢 REDIS CACHE HIT: Served ${cacheKey} in <1ms`); // Add this
+        console.log(`🟢 REDIS CACHE HIT: Served ${cacheKey} in <1ms`);
         res.setHeader('X-Cache', 'HIT');
-        res.status(200).json(JSON.parse(cachedData));
+        
+        // FIX: Safely parse only if it is a string, otherwise use it directly
+        const parsedData = typeof cachedData === 'string' ? JSON.parse(cachedData) : cachedData;
+        res.status(200).json(parsedData);
         return;
       }
     }
 
-    console.log(`🔴 REDIS CACHE MISS: Computing BFS for ${cacheKey}`); // Add this
+    console.log(`🔴 REDIS CACHE MISS: Computing BFS for ${cacheKey}`);
     (req as any).cacheKey = cacheKey;
     res.setHeader('X-Cache', 'MISS');
     

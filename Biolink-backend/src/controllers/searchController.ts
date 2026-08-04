@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express';
 // Double check the relative path based on where you save db.ts
 import { pipeline } from '@xenova/transformers';
-import { prisma } from '../prisma';
+import { prisma } from '../prisma.js';
 
 let localEmbedder: any = null;
 
