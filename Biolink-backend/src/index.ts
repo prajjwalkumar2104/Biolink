@@ -23,7 +23,10 @@ import { cacheMultiCascade } from './middleware/cacheMiddleware.js';
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: '*', // Or specify your Vercel URL: 'https://your-frontend.vercel.app'
+  credentials: true,
+}));
 app.use(express.json());
 const upload = multer({ storage: multer.memoryStorage() });
 
